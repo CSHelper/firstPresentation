@@ -1,0 +1,36 @@
+body {
+	word-wrap: all;
+}
+
+.editor-options {
+	height: 10%;
+}
+
+.description {
+	height: 100%;
+	overflow-y: auto;
+}
+
+.editor-panel {
+	height: 100%;
+}
+
+.editor {
+	height: 80%;
+}
+
+.CodeMirror {
+	min-height: 100%;
+	margin: 0px;
+}
+
+
+.upper {
+	height: 400px;
+	/*background-color: blue;*/	
+}
+
+.lower {
+	height: 200px;
+	/*background-color: red;*/
+}
