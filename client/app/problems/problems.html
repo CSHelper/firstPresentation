@@ -1,0 +1,59 @@
+<!-- Current Task Jumbotron -->	
+<div class="container">
+	<div class="coding-section">
+		<div class="row upper">
+			<div class="col-md-5 description">
+				<div style="">
+					<h1>{{problemsCtrl.lesson}}</h1>
+
+					<p>Description:</p> <!-- Describe the Task Here -->
+					<p>This section contains description for the problem</p>
+
+					<div class="mw-highlight mw-content-ltr" dir="ltr">
+						
+					</div>
+					<p></p>
+					<p>Instructions:</p>
+					<p>This section contains instructions for the problem</p>
+					<p></p>
+				</div>
+			</div>
+			<div class="col-md-7 editor-panel">
+				<div class="editor-options">
+					<span>
+						<select id="languageSelector" class="selectpicker">
+						  <option value="text/x-csrc">C</option>
+						  <option value="text/x-c++src">C++</option>
+						  <option value="text/x-java">Java</option>
+						</select>
+					</span>
+					<span class="pull-right">
+						<button class="btn btn-primary" ng-disable="problemsCtrl.isProcessing" ng-click="problemsCtrl.run()">
+							Run 
+							<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" ng-show="problemsCtrl.isProcessing"></i>
+						</button>
+						<button class="btn btn-warning" ng-disable="problemsCtrl.isProcessing" ng-click="problemsCtrl.submit()">
+							Submit 
+							<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" ng-show="problemsCtrl.isProcessing"></i>
+						</button>
+					</span>
+
+				</div>
+				
+				<p></p>
+				
+				<div class="editor">
+					<textarea id="code-editor"></textarea>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row lower">
+		<div class="col-md-12">
+			<textarea id="code-output"></textarea>
+		</div>
+	</div>
+
+</div>

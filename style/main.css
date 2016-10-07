@@ -27,10 +27,8 @@ body {
 
 .upper {
 	height: 400px;
-	/*background-color: blue;*/	
 }
 
-.lower {
+.lower .CodeMirror {
 	height: 200px;
-	/*background-color: red;*/
 }
