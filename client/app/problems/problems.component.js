@@ -38,7 +38,7 @@ export class ProblemsComponent {
       editor.getDoc().setValue(self1.fillEditor($(this).val()));
     })
 
-    this.description = 'Hello'
+    this.description = 'Test'
   }
 
   run() {
