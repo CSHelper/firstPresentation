@@ -37,6 +37,8 @@ export class ProblemsComponent {
       editor.setOption("mode", $(this).val());
       editor.getDoc().setValue(self1.fillEditor($(this).val()));
     })
+
+    this.description = 'Hello'
   }
 
   run() {
