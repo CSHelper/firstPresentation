@@ -36,6 +36,7 @@
 							Submit 
 							<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" ng-show="problemsCtrl.isProcessing"></i>
 						</button>
+						{{problemsCtrl.store}}
 					</span>
 
 				</div>
@@ -43,7 +44,7 @@
 				<p></p>
 				
 				<div class="editor">
-					<textarea id="code-editor"></textarea>
+					<textarea id="code-editor" ng-model="problemsCtrl.store"></textarea>
 				</div>
 			</div>
 		</div>

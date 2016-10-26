@@ -7,12 +7,13 @@ import routes from './problems.routes';
 
 export class ProblemsComponent {
   /*@ngInject*/
-  constructor($stateParams, $timeout) {
+  constructor($stateParams, $timeout, $http) {
     'ngInject';
 
     if (!$stateParams.language || !$stateParams.lesson) {
       console.log("hi")
     }
+    this.$http = $http;
     this.$timeout = $timeout;
     this.language = $stateParams.language;
     this.lesson = decodeURI($stateParams.lesson);
@@ -42,10 +43,24 @@ export class ProblemsComponent {
   run() {
     var self = this;
     self.isProcessing = true;
-    this.$timeout(function () {
+    /*this.$timeout(function () {
       self.isProcessing = false;
       self.output.getDoc().setValue('Hello World');
-    }, 3000)
+    }, 3000)*/
+    if(this.editor.getValue()) {
+      this.$http.post('/api/codes', {
+        code: 
+        {
+          content: this.editor.getValue(), fileExtension: "c"
+        }
+      })
+      .then(function (res) {
+        self.response = res.data.stdout;
+        self.error = res.data.stderr;
+        console.log(res)
+        self.output.getDoc().setValue(res.data.output)
+      });
+    }
   }
 
   submit() {
