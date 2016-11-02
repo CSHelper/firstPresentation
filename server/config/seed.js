@@ -7,6 +7,8 @@
 import sqldb from '../sqldb';
 var Thing = sqldb.Thing;
 var User = sqldb.User;
+var Problem = sqldb.Problem;
+var DataSet = sqldb.Dataset;
 
 Thing.sync()
   .then(() => {
@@ -62,3 +64,48 @@ User.sync()
       console.log('finished populating users');
     });
   });
+
+Problem.sync()
+  .then(() => Problem.destroy({ where: {} }))
+  .then(() => {
+    Problem.bulkCreate([{
+      _id: 1,
+      title: 'Addition',
+      language: 'c',
+      description: 'Create code to add two integers together and produce output',
+      template: `int addition(int a, int b) {
+
+
+  return 0;
+}`
+        
+    }])
+    .then(() => {
+      console.log('finished populating problems');
+      DataSet.sync()
+        .then(() => DataSet.destroy({ where: {} }))
+        .then(() => {
+          DataSet.bulkCreate([{
+            input: {
+              input1:{
+                value:2,dataType:'int'
+              },
+              input2:{
+                value:3,dataType: 'int'
+              }
+            },
+            output: {
+              value:5,dataType: 'int'
+            },
+            problemId: 1
+
+          }])
+          .then(() => {
+            console.log('finished populating problems');
+          });
+        });
+
+    });
+  });
+
+  

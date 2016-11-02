@@ -13,19 +13,26 @@ export class ProblemsComponent {
     if (!$stateParams.language || !$stateParams.lesson) {
       console.log("hi")
     }
+    this.id = $stateParams.id;
     this.$http = $http;
     this.$timeout = $timeout;
-    this.language = $stateParams.language;
-    this.lesson = decodeURI($stateParams.lesson);
     this.editors = [];
-    this.init();
+    var self = this;
+    this.$http.get('/api/problems/' + this.id)
+    .then(function (res) {
+      self.init(res.data);
+      console.log(res)
+    });
 
   }
 
-  init() {
-
+  init(res) {
+    console.log(res)
     this.editor = (this.createCodeMirror('code-editor'));
-    this.editor.getDoc().setValue(this.fillEditor('text/x-c++src'));
+    this.editor.getDoc().setValue(res.template);
+    this.editor.setOption("mode", 'text/x-'+res.language+'src');
+    this.description = res.description;
+    this.title = res.title;
 
     this.output = this.createCodeMirror('code-output', {
       readOnly: 'nocursor',
@@ -39,7 +46,6 @@ export class ProblemsComponent {
       editor.getDoc().setValue(self1.fillEditor($(this).val()));
     })
 
-    this.description = 'Test'
   }
 
   run() {

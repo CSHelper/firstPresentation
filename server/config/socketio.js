@@ -16,6 +16,8 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/dataset/dataset.socket').register(socket);
+  require('../api/problem/problem.socket').register(socket);
   require('../api/code/code.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
 }
