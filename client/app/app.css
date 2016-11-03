@@ -46,6 +46,7 @@
 /* inject:css */
 @import 'admin/admin.css';
 @import 'main/main.css';
+@import 'manageStudents/manageStudents.css';
 @import 'problems/problems.css';
 @import 'userHome/userHome.css';
 @import '../components/footer/footer.css';

@@ -8,10 +8,26 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    title: DataTypes.STRING(25),
-    language: DataTypes.STRING(10),
-    description: DataTypes.STRING,
-    template: DataTypes.STRING
+    title:{ 
+      type: DataTypes.STRING(25),
+      allowNull: false
+    },
+    language: { 
+      type: DataTypes.STRING(10),
+      allowNull: false
+    },
+    description: { 
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    template: { 
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    functionName: { 
+      type: DataTypes.STRING,
+      allowNull: false
+    }
 
   });
 }

@@ -11,7 +11,7 @@
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import {Code} from '../../sqldb';
+import {Code,TestView} from '../../sqldb';
 
 var fs = require('fs');
 var Promise = require('bluebird');
@@ -97,10 +97,11 @@ function write(content, fileExtension) {
     });
 }
 
-function spawnC(res, fileExtension) {
+function spawnC(res, fileExtension, dataSet) {
   var results = {
     stderr: '',
-    stdout:''
+    stdout:'',
+    dataSet
   };
   var complier = '';
   if (fileExtension === 'cpp') {
@@ -116,10 +117,12 @@ function spawnC(res, fileExtension) {
     results.output = result.stderr.toString('utf8');
   } else {
     result = spawnSync('./a.out');
+    results.isSuccess = result.status === 0;
+    console.log(result.status);
     results.output = result.stdout.toString('utf8');
     results.output += result.stderr.toString('utf8');
   }
-  return res.json(results);
+  return results;
 }
 
 function spawnNode(res, fileExtension) {
@@ -137,20 +140,52 @@ function spawnNode(res, fileExtension) {
   return res.json(results)
 }
 
+var unitTestC = `void main(){
+  {{dataType}} output = {{functionName}}({{params}});
+  printf("{{printType}}", output);
+  if(output != {{expectedOutput}}) {
+    exit(1);
+  }
+  exit(0);
+}
+`
 // Creates a new Code in the DB
 export function create(req, res) {
 
+  let tmp;
 
-  return write(req.body.code.content, req.body.code.fileExtension)
-    .then(function (){
-      return Code.create(req.body.code)
+  TestView.findAll({where: {problemId: 1}})
+    .then(function (results){
+      tmp = results[0];
+      let cat = '';
+      let params = JSON.parse(tmp.input)
+      for(let input in params) {
+        cat +=  params[input].value+',';
+      }
+      cat = cat.slice(0, -1);
+      let unitTest = unitTestC;
+      let output = JSON.parse(tmp.output)
+      unitTest = unitTest
+      .replace('{{params}}',cat)
+      .replace('{{expectedOutput}}',output.value)
+      .replace('{{dataType}}', output.dataType)
+      .replace('{{functionName}}', tmp.functionName)
+      .replace('{{printType}}', '%d');
+      unitTest = unitTest+req.body.code.content;
+      return write(unitTest, req.body.code.fileExtension)
     })
     .then(function (response) {
       if (req.body.code.fileExtension === 'js') {
         spawnNode(res, 'js');
       } else if (req.body.code.fileExtension === 'c' || req.body.code.fileExtension === 'cpp') {
-        spawnC(res, req.body.code.fileExtension);
+        tmp = spawnC(res, req.body.code.fileExtension);
       }
+      let entry = req.body.code;
+      entry.isSuccess = tmp.isSuccess;
+      return Code.create(entry)
+    })
+    .then(function(){
+      return res.json(tmp)
     })
     .catch(handleError(res));
 }
