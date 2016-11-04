@@ -28,12 +28,13 @@ import problems from './problems/problems.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
+import ManageStudentsComponent from './manageStudents/manageStudents.component';
 
 import './app.css';
 
 angular.module('firstPresentationApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io',
     uiRouter, uiBootstrap, _Auth, account, admin, navbar, footer, main, constants, socket, util,
-    userHome, problems
+    userHome, problems, ManageStudentsComponent
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

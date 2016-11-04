@@ -7,24 +7,32 @@ import routes from './problems.routes';
 
 export class ProblemsComponent {
   /*@ngInject*/
-  constructor($stateParams, $timeout) {
+  constructor($stateParams, $timeout, $http) {
     'ngInject';
 
     if (!$stateParams.language || !$stateParams.lesson) {
       console.log("hi")
     }
+    this.id = $stateParams.id;
+    this.$http = $http;
     this.$timeout = $timeout;
-    this.language = $stateParams.language;
-    this.lesson = decodeURI($stateParams.lesson);
     this.editors = [];
-    this.init();
+    var self = this;
+    this.$http.get('/api/problems/' + this.id)
+    .then(function (res) {
+      self.init(res.data);
+      console.log(res)
+    });
 
   }
 
-  init() {
-
+  init(res) {
+    console.log(res)
     this.editor = (this.createCodeMirror('code-editor'));
-    this.editor.getDoc().setValue(this.fillEditor('text/x-c++src'));
+    this.editor.getDoc().setValue(res.template);
+    this.editor.setOption("mode", 'text/x-'+res.language+'src');
+    this.description = res.description;
+    this.title = res.title;
 
     this.output = this.createCodeMirror('code-output', {
       readOnly: 'nocursor',
@@ -38,16 +46,29 @@ export class ProblemsComponent {
       editor.getDoc().setValue(self1.fillEditor($(this).val()));
     })
 
-    this.description = 'Hello'
   }
 
   run() {
     var self = this;
     self.isProcessing = true;
-    this.$timeout(function () {
+    /*this.$timeout(function () {
       self.isProcessing = false;
       self.output.getDoc().setValue('Hello World');
-    }, 3000)
+    }, 3000)*/
+    if(this.editor.getValue()) {
+      this.$http.post('/api/codes', {
+        code: 
+        {
+          content: this.editor.getValue(), fileExtension: "c"
+        }
+      })
+      .then(function (res) {
+        self.response = res.data.stdout;
+        self.error = res.data.stderr;
+        console.log(res)
+        self.output.getDoc().setValue(res.data.output)
+      });
+    }
   }
 
   submit() {

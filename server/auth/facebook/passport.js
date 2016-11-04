@@ -12,18 +12,15 @@ export function setup(User, config) {
     ]
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log('\n\n\n\n fuck');
     User.find({where: {'facebookId': profile.id}})
       .then(user => {
-        console.log('\n\n\n\n find');
         if(user) {
           return done(null, user);
         }
-        console.log('\n\n\n\n prebuild');
         user = User.build({
           name: profile.displayName,
           email: profile.emails[0].value,
-          role: 'user',
+          role: 'student',
           provider: 'facebook',
           facebookId: profile.id,
           json: profile._json

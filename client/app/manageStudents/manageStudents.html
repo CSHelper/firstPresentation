@@ -1,0 +1,269 @@
+<div class="container">
+	<!-- <div class="jumbotron"> -->
+		<div class="">
+			<div class="col-md-3" style="border-style:solid">
+				<h2>Student List</h2>
+				<p></p>
+				<h4>Please select a student to view.</>
+				<p></p>
+				
+				<input type="text" name="search" placeholder="Search Student Name" ng-model="manageStudentsCtrl.searchText">
+				
+				</br>
+				</br>
+				
+				<p>Name: </p>
+				
+				<div class="list-group">
+					<a href="studentGrades.html" class="list-group-item" ng-repeat="student in manageStudentsCtrl.students | filter:manageStudentsCtrl.searchText">{{student.studentName}}</a>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<center>
+					<h3>Student: Tommy Shay</h3>
+				</center>
+				</br>
+				
+				
+							<div class="panel-body">
+								<div class="panel-body">
+								<div class="list-group">
+									<p>
+									  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+										Java
+									  </a>
+									  <a class="btn btn-primary" data-toggle="collapse" href="#testing" aria-expanded="false" aria-controls="testing">
+										C++
+									  </a>
+									  
+									</p>
+									<!-- ********************************************************************
+														first button
+										********************************************************************* -->
+									<div class="collapse" id="collapseExample">
+									  <div class="card card-block">
+										<a href="#" class="list-group-item active">
+										Java Basics
+										</a>
+										<div id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="card">
+    <div class="card-header" role="tab" id="headingOne">
+      <h5 class="mb-0">
+        <a class="btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Data Types	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&#x2716;
+        </a>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="card-block">
+        
+      	<h4>Problem 1: Attempts: 1   &#10004;</h4><br/>
+      	If you need to multiple two numbers together, and one of the numbers is 2.5, what data type do you need to use for your operations?
+      	<br/><br/>
+      	<h4>User Code:</h4><br/>
+      	First Attempt: double
+      	<br/><br/>
+      	<h4>Problem 2:  Attempts: 3   &#x2716;</h4><br/>
+      	If you need a variable to be able to store "Hello", what data type would you have to use?
+      	<br/><br/>
+      	<h4>User Code:</h4><br/>
+      	First Attempt: integer<br/>
+      	Second Attempt: double<br/>
+      	Third Attempt: float<br/>
+      	<br/><br/>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" role="tab" id="headingTwo">
+      <h5 class="mb-0">
+        <a class="btn btn-default"  data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          If statement	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&#10004;
+        </a>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="card-block">
+        <h4>Problem 1: Attempts: 1   &#10004;</h4><br/> Please write a program to print Hi if A is 1, Bye if not.
+        <br/>
+        <br />
+        
+       	<h4>User Code:</h4><br/>
+       	if (A == 1){<br/>
+       	&emsp;	System.out.println("Hi");<br/>
+       	}<br/>
+       	else<br/>
+       	&emsp;	System.out.println("Bye");<br/>
+
+       	<br /><br/><br/>
+       	<h4>Problem 2: Attempts: 1   &#10004;</h4><br/>
+       	Please write a program that will print out "A is greater" if A > B.  If not, it will print out "B is greater".
+        <br/>
+        <br />
+       	<h4>User Code:</h4><br/>
+       	if (A > B){<br/>
+       	&emsp;	System.out.println("A is greater");<br/>
+       	}<br/>
+       	else<br/>
+       	&emsp;	System.out.println("B is greater");<br/>
+       	<br/><br/>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" role="tab" id="headingThree">
+      <h5 class="mb-0">
+        <a class="btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Operators	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;&thinsp;&#10004;
+        </a>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="card-block">
+       Problem 3
+      </div>
+    </div>
+  </div>
+</div>
+									<!-- replacing with new method 
+									<a href="#" class="list-group-item">Data Types	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&empsg;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&#10004;</a>
+									<a href="#" class="list-group-item">Variable Types &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;&thinsp;&#x2716;</a>
+									<a href="#" class="list-group-item">Operators  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;&thinsp;&#10004;</a>
+									
+									<p></p>
+									
+									<a href="#" class="list-group-item active">
+										Conditionals
+									</a>
+									<a href="#" class="list-group-item">If Statement &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&#10004;</a>
+									<a href="#" class="list-group-item">If Else Statement &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;&thinsp;&thinsp;&#10004;</a>
+									<!-- Acting as if the student hasn't done the below problems, so we don't need to show them
+									<a href="#" class="list-group-item">Nested If Statement</a>
+									<a href="#" class="list-group-item">Switch Statement</a>
+									
+									-->
+									<p></p>
+									
+									<a href="#" class="list-group-item active">
+										Loop Statements
+									</a>
+									<a href="#" class="list-group-item">While Statement &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&#x2716;</a>
+									
+									<!--
+									<a href="#" class="list-group-item">Do While Statement</a>
+									Acting as if student didn't do this problem 
+									<a href="#" class="list-group-item">For Statement</a>
+									-->
+									
+									<p></p>
+									
+									<a href="#" class="list-group-item active">
+										Loop Control Statements
+									</a>
+									<a href="#" class="list-group-item">Break Statement &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&#x2716;</a>
+									
+									<!--
+									<a href="#" class="list-group-item">Continue Statement</a>
+									-->
+								</div>
+									  </div>
+									</div>
+									
+								<!-- second button -->
+
+									<div class="collapse" id="testing">
+									  <div class="card card-block">
+										<a href="#" class="list-group-item active">
+										C++ Basics
+										</a>
+										<a href="#" class="list-group-item">Introduction to C++</a>
+										<a href="#" class="list-group-item">Data Types</a>
+										<a href="#" class="list-group-item">Variable Types</a>
+										<a href="#" class="list-group-item">Operators</a>
+										
+										<p></p>
+										
+										<a href="#" class="list-group-item active">
+											Conditionals
+										</a>
+										<a href="#" class="list-group-item">If Statement</a>
+										<a href="#" class="list-group-item">If Else Statement</a>
+										<a href="#" class="list-group-item">Nested If Statement</a>
+										<a href="#" class="list-group-item">Switch Statement</a>
+										
+										<p></p>
+										
+										<a href="#" class="list-group-item active">
+											Loop Statements
+										</a>
+										<a href="#" class="list-group-item">While Statement</a>
+										<a href="#" class="list-group-item">Do While Statement</a>
+										<a href="#" class="list-group-item">For Statement</a>
+										
+										<p></p>
+										
+										<a href="#" class="list-group-item active">
+											Loop Control Statements
+										</a>
+										<a href="#" class="list-group-item">Break Statement</a>
+										<a href="#" class="list-group-item">Continue Statement</a>
+											</div>
+									  </div>
+									</div>								
+								
+								
+								<!--<div class="list-group">
+									<a href="#" class="list-group-item active">
+										Java Basics
+									</a>
+									
+									<a href="#" class="list-group-item">Data Types</a>
+									<a href="#" class="list-group-item">Variable Types</a>
+									<a href="#" class="list-group-item">Operators</a>
+									
+									<p></p>
+									
+									<a href="#" class="list-group-item active">
+										Conditionals
+									</a>
+									<a href="#" class="list-group-item">If Statement</a>
+									<a href="#" class="list-group-item">If Else Statement</a>
+									<a href="#" class="list-group-item">Nested If Statement</a>
+									<a href="#" class="list-group-item">Switch Statement</a>
+									
+									<p></p>
+									
+									<a href="#" class="list-group-item active">
+										Loop Statements
+									</a>
+									<a href="#" class="list-group-item">While Statement</a>
+									<a href="#" class="list-group-item">Do While Statement</a>
+									<a href="#" class="list-group-item">For Statement</a>
+									
+									<p></p>
+									
+									<a href="#" class="list-group-item active">
+										Loop Control Statements
+									</a>
+									<a href="#" class="list-group-item">Break Statement</a>
+									<a href="#" class="list-group-item">Continue Statement</a>
+								</div>
+								-->
+								
+							</div>
+							
+				
+
+
+				
+				
+			</div>
+		</div>
+	<!-- </div> -->
+</div>
+	
+	</br>
+	</br>
