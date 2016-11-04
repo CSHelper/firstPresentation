@@ -6,6 +6,6 @@ export default function($stateProvider) {
     .state('problems', {
       url: '/problems?id',
       template: '<problems></problems>',
-      //authenticate: 'user'
+      authenticate: 'student'
     });
 }

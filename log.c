@@ -7,5 +7,6 @@ void main(){
   exit(0);
 }
 int addition(int a, int b) {
-    return 5;
+   printf("hello");
+  return 5;
 }
