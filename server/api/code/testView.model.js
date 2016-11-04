@@ -8,8 +8,8 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    input: DataTypes.JSON,
-    output: DataTypes.JSON,
+    inputs: DataTypes.JSON,
+    expectedOutput: DataTypes.JSON,
     functionName: DataTypes.STRING
   });
 }

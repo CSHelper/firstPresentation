@@ -2,6 +2,7 @@
  * Using Rails-like standard naming convention for endpoints.
  * GET     /api/codes              ->  index
  * POST    /api/codes              ->  create
+ * POST    /api/codes/run          ->  run
  * GET     /api/codes/:id          ->  show
  * PUT     /api/codes/:id          ->  upsert
  * PATCH   /api/codes/:id          ->  patch
@@ -97,13 +98,9 @@ function write(content, fileExtension) {
     });
 }
 
-function spawnC(res, fileExtension, dataSet) {
-  var results = {
-    stderr: '',
-    stdout:'',
-    dataSet
-  };
-  var complier = '';
+function spawnC(res, fileExtension) {
+  let consoleOutput = '';
+  let complier = '';
   if (fileExtension === 'cpp') {
     complier = 'g++';
   } else {
@@ -114,15 +111,16 @@ function spawnC(res, fileExtension, dataSet) {
     ['log.'+ fileExtension]);
 
   if (result.status !== 0) {
-    results.output = result.stderr.toString('utf8');
+    consoleOutput = result.stderr.toString('utf8');
   } else {
     result = spawnSync('./a.out');
-    results.isSuccess = result.status === 0;
-    console.log(result.status);
-    results.output = result.stdout.toString('utf8');
-    results.output += result.stderr.toString('utf8');
+    consoleOutput = result.stdout.toString('utf8');
+    consoleOutput += result.stderr.toString('utf8');
   }
-  return results;
+  return {
+    isSuccess: result.status === 0,
+    consoleOutput: consoleOutput
+  };
 }
 
 function spawnNode(res, fileExtension) {
@@ -140,9 +138,41 @@ function spawnNode(res, fileExtension) {
   return res.json(results)
 }
 
+function testData(tmp, req, res) {
+  let cat = '';
+  tmp.inputs = JSON.parse(tmp.inputs);
+  for(let input in tmp.inputs) {
+    cat +=  tmp.inputs[input].value + ',';
+  }
+  cat = cat.slice(0, -1);
+  let unitTest = unitTestC;
+  tmp.expectedOutput = JSON.parse(tmp.expectedOutput);
+  unitTest = unitTest
+    .replace('{{params}}', cat)
+    .replace('{{expectedOutput}}', tmp.expectedOutput.value)
+    .replace('{{dataType}}', tmp.expectedOutput.dataType)
+    .replace('{{functionName}}', tmp.functionName)
+    .replace('{{printType}}', '%d');
+  unitTest = unitTest + req.body.code.content;
+  return write(unitTest, req.body.code.fileExtension)
+    .then(function (response) {
+      let runningOutput;
+      if (req.body.code.fileExtension === 'js') {
+        spawnNode(res, 'js');
+      } else if (req.body.code.fileExtension === 'c' || req.body.code.fileExtension === 'cpp') {
+       runningOutput = spawnC(res, req.body.code.fileExtension);
+      }
+      let outputs = runningOutput.consoleOutput.split('\n');
+      tmp.output = outputs.pop();
+      tmp.consoleOutput = outputs.join('\n');
+      tmp.isSuccess = runningOutput.isSuccess;
+      return tmp;
+    })
+}
+
 var unitTestC = `void main(){
   {{dataType}} output = {{functionName}}({{params}});
-  printf("{{printType}}", output);
+  printf("\\n{{printType}}", output);
   if(output != {{expectedOutput}}) {
     exit(1);
   }
@@ -153,39 +183,35 @@ var unitTestC = `void main(){
 export function create(req, res) {
 
   let tmp;
-
+  let dataSets;
   TestView.findAll({where: {problemId: 1}})
     .then(function (results){
-      tmp = results[0];
-      let cat = '';
-      let params = JSON.parse(tmp.input)
-      for(let input in params) {
-        cat +=  params[input].value+',';
-      }
-      cat = cat.slice(0, -1);
-      let unitTest = unitTestC;
-      let output = JSON.parse(tmp.output)
-      unitTest = unitTest
-      .replace('{{params}}',cat)
-      .replace('{{expectedOutput}}',output.value)
-      .replace('{{dataType}}', output.dataType)
-      .replace('{{functionName}}', tmp.functionName)
-      .replace('{{printType}}', '%d');
-      unitTest = unitTest+req.body.code.content;
-      return write(unitTest, req.body.code.fileExtension)
+      dataSets = results;
+      return testData(results[0], req, res);
     })
-    .then(function (response) {
-      if (req.body.code.fileExtension === 'js') {
-        spawnNode(res, 'js');
-      } else if (req.body.code.fileExtension === 'c' || req.body.code.fileExtension === 'cpp') {
-        tmp = spawnC(res, req.body.code.fileExtension);
-      }
+    .then(function (result) {
       let entry = req.body.code;
-      entry.isSuccess = tmp.isSuccess;
+      entry.isSuccess = true;
+      for (var i = 0; i < dataSets.length; i++) {
+        if(dataSets[i] !== true) {
+          entry.isSuccess = false;
+        }
+      }
+    
       return Code.create(entry)
     })
     .then(function(){
-      return res.json(tmp)
+      let results = [];
+      for (var i = 0; i < dataSets.length; i++) {
+        var object = {
+          isSuccess: dataSets[i].isSuccess,
+          _id: dataSets[i]._id,
+          consoleOutput: dataSets[i].consoleOutput,
+          output: dataSets[i].output
+        };
+        results.push(object);
+      }
+      return res.json(results);
     })
     .catch(handleError(res));
 }
@@ -223,6 +249,18 @@ export function patch(req, res) {
 
 // Deletes a Code from the DB
 export function destroy(req, res) {
+  return Code.find({
+    where: {
+      _id: req.params.id
+    }
+  })
+    .then(handleEntityNotFound(res))
+    .then(removeEntity(res))
+    .catch(handleError(res));
+}
+
+// Run code
+export function run(req, res) {
   return Code.find({
     where: {
       _id: req.params.id

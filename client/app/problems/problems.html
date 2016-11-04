@@ -49,9 +49,25 @@
 	</div>
 
 	<div class="row lower">
-		<div class="col-md-12">
+		<div class="col-md-4">
+			<div class="list-group" ng-repeat="test in problemsCtrl.dataset track by $index">
+			  <a href="#" class="list-group-item" ng-class="test.class || 'list-group-item-danger'">
+			    Test {{$index + 1}}
+			  </a>
+			  <a href="#" class="list-group-item">Input(s): <span ng-repeat="input in test.inputs">{{input.dataType}} {{input.value}}, </span></a>
+			  <a href="#" class="list-group-item">
+			  Output: {{test.output || 'null'}}</a>
+			  <a href="#" class="list-group-item">Expected output: {{test.expectedOutput.dataType}} {{test.expectedOutput.value}}</a>
+			  <a href="#" class="list-group-item">Console output: {{test.consoleOutput || 'null'}}</a>
+			</div>
+		</div>
+
+		<div class="col-md-8">
+			<!-- <ul class="nav nav-tabs">
+			  <li role="presentation" class="active"><a href="#">Console</a></li>
+			  <li role="presentation"><a href="#">Tests</a></li>
+			</ul> -->
 			<textarea id="code-output"></textarea>
 		</div>
 	</div>
-
 </div>

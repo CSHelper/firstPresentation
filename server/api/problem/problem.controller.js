@@ -11,7 +11,7 @@
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import {Problem} from '../../sqldb';
+import {Problem, Dataset} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -72,11 +72,31 @@ export function index(req, res) {
 
 // Gets a single Problem from the DB
 export function show(req, res) {
+  let problem;
   return Problem.find({
     where: {
       _id: req.params.id
     }
   })
+    .then(function (result) {
+      problem = result;
+      return Dataset.findAll({
+        where: {
+          problemId: req.params.id
+        }
+      })
+    })
+    .then(function (results) {
+      for (var i = 0; i < results.length; i++) {
+        results[i].inputs = JSON.parse(results[i].inputs);
+        results[i].expectedOutput = JSON.parse(results[i].expectedOutput);
+      }
+      
+      return {
+        dataset: results,
+        problem
+      }
+    })
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));

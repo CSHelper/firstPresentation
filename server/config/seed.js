@@ -132,11 +132,9 @@ Problem.sync()
       _id: 1,
       title: 'Addition',
       language: 'c',
-      description: 'Create code to add two integers together and produce output',
+      description: 'Create code to add two integers together and produce expectedOutput',
       template: `int addition(int a, int b) {
-
-
-  return 0;
+    return 0;
 }`,
       functionName: 'addition'
         
@@ -147,19 +145,28 @@ Problem.sync()
         .then(() => DataSet.destroy({ where: {} }))
         .then(() => {
           DataSet.bulkCreate([{
-            input: {
-              input1:{
-                value:2,dataType:'int'
-              },
-              input2:{
-                value:3,dataType: 'int'
+            inputs: [{
+                value:2, dataType:'int'
+              },{
+                value:3, dataType: 'int'
               }
-            },
-            output: {
+            ],
+            expectedOutput: {
               value:5,dataType: 'int'
             },
             problemId: 1
 
+          },{
+            inputs: [{
+                value:1, dataType:'int'
+              },{
+                value:2, dataType: 'int'
+              }
+            ],
+            expectedOutput: {
+              value:3,dataType: 'int'
+            },
+            problemId: 1
           }])
           .then(() => {
             console.log('finished populating problems');

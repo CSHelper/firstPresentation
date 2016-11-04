@@ -10,29 +10,30 @@ export class ProblemsComponent {
   constructor($stateParams, $timeout, $http) {
     'ngInject';
 
-    if (!$stateParams.language || !$stateParams.lesson) {
-      console.log("hi")
-    }
     this.id = $stateParams.id;
     this.$http = $http;
     this.$timeout = $timeout;
     this.editors = [];
+    this.response;
+    this.tab = 'console';
+
     var self = this;
     this.$http.get('/api/problems/' + this.id)
     .then(function (res) {
-      self.init(res.data);
-      console.log(res)
+      self.init(res.data.problem, res.data.dataset);
+      self.displayTests();
     });
-
   }
 
-  init(res) {
-    console.log(res)
+  init(problem, dataset) {
+    this.problem = problem;
+    this.dataset = dataset;
+
     this.editor = (this.createCodeMirror('code-editor'));
-    this.editor.getDoc().setValue(res.template);
-    this.editor.setOption("mode", 'text/x-'+res.language+'src');
-    this.description = res.description;
-    this.title = res.title;
+    this.editor.getDoc().setValue(problem.template);
+    this.editor.setOption('mode', 'text/x-' + problem.language+'src');
+    this.description = problem.description;
+    this.title = problem.title;
 
     this.output = this.createCodeMirror('code-output', {
       readOnly: 'nocursor',
@@ -42,39 +43,60 @@ export class ProblemsComponent {
     var editor = this.editor;
     var self1 = this;
     $('#languageSelector').on('change', function (e) {
-      editor.setOption("mode", $(this).val());
+      editor.setOption('mode', $(this).val());
       editor.getDoc().setValue(self1.fillEditor($(this).val()));
     })
 
   }
 
   run() {
-    var self = this;
-    self.isProcessing = true;
-    /*this.$timeout(function () {
-      self.isProcessing = false;
-      self.output.getDoc().setValue('Hello World');
-    }, 3000)*/
-    if(this.editor.getValue()) {
-      this.$http.post('/api/codes', {
-        code: 
-        {
-          content: this.editor.getValue(), fileExtension: "c"
-        }
-      })
-      .then(function (res) {
-        self.response = res.data.stdout;
-        self.error = res.data.stderr;
-        console.log(res)
-        self.output.getDoc().setValue(res.data.output)
-      });
-    }
+    
   }
 
   submit() {
-    this.run();
+    var self = this;
+    self.isProcessing = true;
+
+    let data = {
+      code:{
+        content: this.editor.getValue(), 
+        fileExtension: "c"
+      }
+    }
+
+    if(this.editor.getValue()) {
+      this.$http.post('/api/codes', data)
+        .then(function (res) {
+          self.isProcessing = false;
+          self.response = res.data;
+          for (var i = 0; i < self.response.length; i++) {
+            for (var key in self.response[i]) {
+              self.dataset[i][key] = self.response[i][key];
+            }
+            if (self.dataset[i].isSuccess) {
+              self.dataset[i].class = 'list-group-item-success'
+            } else {
+              self.dataset[i].class = 'list-group-item-danger';
+            }
+          }
+        })
+        .catch(function (error) {
+          self.isProcessing = false;
+          console.log(error);
+        })
+    }
   }
 
+  displayConsole() {
+    if (this.tab === 'console')
+      this.output.getDoc().setValue(this.response.consoleOutput);
+  }
+
+  displayTests() {
+    console.log(this.dataset);
+    // if (this.tab === 'tests')
+    //   this.output.getDoc().setValue(this.response.consoleOutput);
+  }
 
   createCodeMirror(id, options) {
     options = options || {};

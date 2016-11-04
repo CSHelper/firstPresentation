@@ -8,9 +8,13 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    input: DataTypes.JSON,
-    output: DataTypes.JSON,
-
-    
+    inputs: {
+      type: DataTypes.JSON,
+      allowNull: false
+    },
+    expectedOutput: {
+      type: DataTypes.JSON,
+      allowNull: false
+    }
   });
 }
