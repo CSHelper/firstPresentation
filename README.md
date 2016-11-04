@@ -24,3 +24,15 @@ Run `gulp build` for building and `gulp serve` for preview.
 ## Testing
 
 Running `npm test` will run the unit tests with karma.
+
+## Export SQL design
+
+```sh
+mysqldump -u newuser -p --no-create-db --no-data CSHelper > dbdesign.sql
+```
+
+## Export SQL design
+
+```sh
+mysql -u user -p {{database name}} < dbdesign.sql
+```
