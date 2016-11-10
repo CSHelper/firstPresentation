@@ -1,47 +1,85 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-import routing from './main.routes';
+'use strict';
+const angular = require('angular');
 
-export class MainController {
-  awesomeThings = [];
-  newThing = '';
+const uiRouter = require('angular-ui-router');
 
+import routes from './main.routes';
+
+export class MainComponent {
   /*@ngInject*/
-  constructor($http, $scope, socket) {
-    this.$http = $http;
-    this.socket = socket;
+  constructor(Auth) {
+    'ngInject';
 
-    $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('thing');
-    });
+    this.getCurrentUser = Auth.getCurrentUserSync;
+
+    var java = {
+      name: 'Java',
+      lessons: this.createLessons('Java')
+    };
+
+    var c = {
+      name: 'C',
+      lessons: this.createLessons('C')
+    };
+
+    var cpp = {
+      name: 'C++',
+      lessons: this.createLessons('C++')
+    };
+    this.encodeURI = encodeURI;
+    this.languages = [java, c, cpp];
   }
 
-  $onInit() {
-    this.$http.get('/api/things')
-      .then(response => {
-        this.awesomeThings = response.data;
-        this.socket.syncUpdates('thing', this.awesomeThings);
-      });
-  }
-
-  addThing() {
-    if(this.newThing) {
-      this.$http.post('/api/things', {
-        name: this.newThing
-      });
-      this.newThing = '';
-    }
-  }
-
-  deleteThing(thing) {
-    this.$http.delete(`/api/things/${thing._id}`);
+  createLessons(language) {
+    var lessons = [{
+      name: language + ' Basics',
+      subLessons: [{
+        name: 'Introduction to ' + language
+      },{
+        name: 'Data Types'
+      },{
+        name: 'Variable Types'
+      },{
+        name: 'Operators'
+      }]
+    }, {
+      name: 'Conditionals',
+      subLessons: [{
+        name: 'If Statement'
+      }, {
+        name: 'If Else Statement'
+      }, {
+        name: 'Nested If Statement'
+      }, {
+        name: 'Switch Statement'
+      }]
+    }, {
+      name: 'Loop Statements',
+      subLessons: [{
+        name: 'While Statement'
+      }, {
+        name: 'Do While Statement'
+      }, {
+        name: 'For Statement'
+      }]
+    }, {
+      name: 'Loop Control Statements',
+      subLessons: [{
+        name: 'Break Statement'
+      }, {
+        name: 'Continue Statement'
+      }]
+    }]
+    
+    return lessons;
   }
 }
 
 export default angular.module('firstPresentationApp.main', [uiRouter])
-  .config(routing)
+  .config(routes)
   .component('main', {
     template: require('./main.html'),
-    controller: MainController
+    controller: MainComponent,
+    controllerAs: 'mainCtrl'
   })
   .name;

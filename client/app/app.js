@@ -23,7 +23,6 @@ import admin from './admin';
 import navbar from '../components/navbar/navbar.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
-import userHome from './userHome/userHome.component';
 import problems from './problems/problems.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
@@ -34,7 +33,7 @@ import './app.css';
 
 angular.module('firstPresentationApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io',
     uiRouter, uiBootstrap, _Auth, account, admin, navbar, footer, main, constants, socket, util,
-    userHome, problems, ManageStudentsComponent
+    problems, ManageStudentsComponent
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

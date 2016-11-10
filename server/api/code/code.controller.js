@@ -92,10 +92,9 @@ export function show(req, res) {
 
 // Creates a new Code in the DB
 function write(content, fileExtension) {
-  return fs.writeFileAsync('./log.' + fileExtension, content)
-    .then(function () {
-      return content;
-    });
+  fs.writeFileSync('./log.' + fileExtension, content)
+    return content;
+    
 }
 
 function spawnC(res, fileExtension) {
@@ -154,9 +153,8 @@ function testData(tmp, req, res) {
     .replace('{{functionName}}', tmp.functionName)
     .replace('{{printType}}', '%d');
   unitTest = unitTest + req.body.code.content;
-  return write(unitTest, req.body.code.fileExtension)
-    .then(function (response) {
-      let runningOutput;
+  write(unitTest, req.body.code.fileExtension)
+  let runningOutput;
       if (req.body.code.fileExtension === 'js') {
         spawnNode(res, 'js');
       } else if (req.body.code.fileExtension === 'c' || req.body.code.fileExtension === 'cpp') {
@@ -167,7 +165,6 @@ function testData(tmp, req, res) {
       tmp.consoleOutput = outputs.join('\n');
       tmp.isSuccess = runningOutput.isSuccess;
       return tmp;
-    })
 }
 
 var unitTestC = `void main(){
@@ -187,12 +184,13 @@ export function create(req, res) {
   TestView.findAll({where: {problemId: 1}})
     .then(function (results){
       dataSets = results;
-      return testData(results[0], req, res);
+      for(let i = 0; i < dataSets.length; i++)
+        testData(results[i], req, res);
     })
     .then(function (result) {
       let entry = req.body.code;
       entry.isSuccess = true;
-      for (var i = 0; i < dataSets.length; i++) {
+      for (let i = 0; i < dataSets.length; i++) {
         if(dataSets[i] !== true) {
           entry.isSuccess = false;
         }
@@ -202,8 +200,8 @@ export function create(req, res) {
     })
     .then(function(){
       let results = [];
-      for (var i = 0; i < dataSets.length; i++) {
-        var object = {
+      for (let i = 0; i < dataSets.length; i++) {
+        let object = {
           isSuccess: dataSets[i].isSuccess,
           _id: dataSets[i]._id,
           consoleOutput: dataSets[i].consoleOutput,
@@ -211,6 +209,7 @@ export function create(req, res) {
         };
         results.push(object);
       }
+      console.log(results)
       return res.json(results);
     })
     .catch(handleError(res));
@@ -261,12 +260,9 @@ export function destroy(req, res) {
 
 // Run code
 export function run(req, res) {
-  return Code.find({
-    where: {
-      _id: req.params.id
-    }
-  })
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
+  return Code.create(entry)
+    .then(function(){
+      
+    })
 }
+
