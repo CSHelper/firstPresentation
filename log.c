@@ -7,5 +7,5 @@ void main(){
   exit(0);
 }
 int addition(int a, int b) {
-    return 0;
+    return a+b;
 }
