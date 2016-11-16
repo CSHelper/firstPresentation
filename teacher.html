@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Student Statistics</title>
+	
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">	
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<!-- css -->
+		<link href="css/styles.css" rel="stylesheet">
+		<link href="css/timeline.css" rel="stylesheet">
+		<link href="css/calendar.css" rel="stylesheet">
+		<link rel='stylesheet' href='accordion.css' />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		
+		<!-- script references -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="modernizr.js"></script>
+		<script src="js/scripts.js"></script>
+		<script src="accordion.js"></script>
+
+	</head>
+	<body>
+<!-- header -->
+<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Student Statistics Dashboard</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> Admin <span class="caret"></span></a>
+                    <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                        <li><a href="#">My Profile</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /Header -->
+
+<!-- Main -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">  <!-- Student List Column -->
+            <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Menu</strong></a>
+
+            <hr>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">Student List<i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <ul class="nav nav-stacked collapse in" id="userMenu">
+                        <li class="active"> <a href="#"><i class="glyphicon glyphicon glyphicon-user"></i> Sunny Aroh</a></li>
+                        <li class="active"> <a href="#"><i class="glyphicon glyphicon glyphicon-user"></i> Dustin Cox</a></li>
+						<li class="active"> <a href="#"><i class="glyphicon glyphicon glyphicon-user"></i> Frank Sanchez</a></li>
+						<li class="active"> <a href="#"><i class="glyphicon glyphicon glyphicon-user"></i> Tommy Shay</a></li>
+						<li class="active"> <a href="#"><i class="glyphicon glyphicon glyphicon-user"></i> Nghia Tran</a></li>
+                    </ul>
+                </li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"> Reports <i class="glyphicon glyphicon-chevron-right"></i></a>
+
+                    <ul class="nav nav-stacked collapse" id="menu2">
+                        <li><a href="#">Information &amp; Statistics</a>
+                        </li>
+                        <li><a href="#">Class Statistics</a>
+                        </li>
+                        <li><a href="#">Alerts</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <hr>
+        </div>
+        
+        <div class="col-sm-3"> <!-- Section - Topic - Problem Column (Accordion) -->
+			<a href="#"><strong><i class="glyphicon glyphicon-list"></i> Choose a Problem</strong></a>
+
+            <hr>
+		
+        	<div class="panel panel-default sectionCollapse"> <!-- Section Panel -->
+	            <div class="panel-heading sectionCollapse" role="tab" id="sectionCollapse">
+	                <h4 class="panel-title">
+	                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+	                        <i class="more-less glyphicon glyphicon-plus"></i>
+	                        Section
+	                    </a>
+	                </h4>
+	            </div>
+	        	<div id="collapse1" class="panel-collapse collapse topicCollapse" role="tabpanel" aria-labelledby="headingOne"> <!-- Topic Panel -->
+
+				
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+							<i class="more-less glyphicon glyphicon-plus"></i>
+							Topic
+						</a>
+					</h4>
+					<div id="collapse2" class="panel-collapse collapse problemCollapse" role="tabpanel" aria-labelledby="headingOne"> <!-- Problem Panel -->
+						
+						
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
+								<i class="more-less glyphicon glyphicon-plus"></i>
+								Problem
+							</a>
+						</h4>
+						<div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+							<div class="panel-body">
+								  change this href to populate information in Problem / Attempt Column
+							</div>
+						</div>
+					</div>
+	            </div>
+        	</div>
+        </div>
+        
+        <div class="col-sm-7"> <!-- Problem / Attempt Column -->
+			<a href="#"><strong><i class="glyphicon glyphicon-education"></i> Problem and Student Attempts</strong></a>
+
+            <hr>
+		
+		
+			<div> <!-- Put Problem Here -->
+				Please write a program to print Hi if A is 1, Bye if not.
+			</div>
+			
+			
+			</br>
+			</br>
+			</br>
+    
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> <!-- Attempt 1 -->
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#attempt1" aria-expanded="true" aria-controls="attempt1">
+								<i class="more-less glyphicon glyphicon-plus"></i>
+								Attempt #1
+							</a>
+						</h4>
+					</div>
+					<div id="attempt1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+						<div class="panel-body">
+							Okay
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> <!-- Attempt 2 -->
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#attempt2" aria-expanded="true" aria-controls="attempt2">
+								<i class="more-less glyphicon glyphicon-plus"></i>
+								Attempt #2
+							</a>
+						</h4>
+					</div>
+					<div id="attempt2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+						<div class="panel-body">
+							  Very Nice
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> <!-- Attempt 3 -->
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#attempt3" aria-expanded="true" aria-controls="attempt3">
+								<i class="more-less glyphicon glyphicon-plus"></i>
+								Attempt #3
+							</a>
+						</h4>
+					</div>
+					<div id="attempt3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+						<div class="panel-body">
+							Try Harder  
+						</div>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+    </div>
+</div>
+<!-- /Main -->
+
+<footer class="text-center"> </footer>
+
+
+		
+	</body>
+</html>
